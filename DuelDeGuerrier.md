@@ -1,7 +1,5 @@
-# Duels-de-guerriers_PART-II
 
-
-<!-- ## **DUELS DE GUERRIERS : PART I**
+## **DUELS DE GUERRIERS : PART I**
 
 ### **1. Création de la Classe Guerrier**
 - **Objectif :** Créer une classe `Guerrier` qui servira de base pour notre duel.
@@ -49,7 +47,7 @@
   2. Faire attaquer les guerriers à tour de rôle.
      - Appeler `Attaquer()` pour infliger des dégâts.
      - Appeler `SubirDegats(int degats)` pour appliquer les dégâts.
-  3. Afficher l’état des guerriers après chaque attaque avec `AfficherInfos()`. -->
+  3. Afficher l’état des guerriers après chaque attaque avec `AfficherInfos()`.
 
 ---
 
@@ -139,4 +137,3 @@ Avec ces méthodes courtes et précises, le programme devient interactif et intu
 - `Program.cs` : Contient la méthode `Main` pour tester le programme.
 
 ---
-

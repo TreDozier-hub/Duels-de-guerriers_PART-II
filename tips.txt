@@ -1,0 +1,99 @@
+Console.ReadKey();
+
+static void ReinitialiserListes()
+{
+    gagnants.Clear();
+    perdants.Clear();
+}
+
+static void AfficherListeGagnants()
+{
+    Console.WriteLine("Liste des gagnants :");
+    foreach (var gagnant in gagnants)
+        Console.WriteLine($"- {gagnant.NomGuerrier}");
+    RetourMenu();
+}
+
+static void AfficherListePerdants()
+{
+    Console.WriteLine("Liste des perdants :");
+    foreach (var perdant in perdants)
+        Console.WriteLine($"- {perdant.NomGuerrier}");
+    RetourMenu();
+}
+
+static void RetourMenu()
+{
+    Console.WriteLine("\nAppuyez sur une touche pour revenir au menu principal...");
+    Console.ReadKey();
+    MenuPrincipal();
+}
+
+static void LancerCombat(Guerrier guerrier1, Guerrier guerrier2)
+{
+    guerrier1.PointsDeVie = Math.Max(guerrier1.PointsDeVie, 0);
+    guerrier2.PointsDeVie = Math.Max(guerrier2.PointsDeVie, 0);
+
+    while (guerrier1.PointsDeVie > 0 && guerrier2.PointsDeVie > 0)
+    {
+        string action1 = guerrier1.ChoisirActionAutomatique(guerrier2);
+        int degats1 = guerrier1.ExecuterAction(action1, guerrier2);
+        guerrier2.SubirDegats(degats1);
+
+        if (guerrier2.PointsDeVie <= 0) break;
+
+        string action2 = guerrier2.ChoisirActionAutomatique(guerrier1);
+        int degats2 = guerrier2.ExecuterAction(action2, guerrier1);
+        guerrier1.SubirDegats(degats2);
+    }
+}
+
+-------------------------------
+
+static void TournoiAutomatique()
+{
+    Console.Clear();
+    if (guerriers.Count < 2)
+    {
+        Console.WriteLine("Pas assez de guerriers pour un tournoi !");
+        RetourMenu();
+        return;
+    }
+
+    Console.WriteLine("Début du tournoi automatique !");
+    ReinitialiserListes();
+
+    while (guerriers.Count > 1)
+    {
+        Console.Clear();
+        Guerrier guerrier1 = guerriers[0];
+        Guerrier guerrier2 = guerriers[1];
+
+        Console.WriteLine($"\nCombat : {guerrier1.NomGuerrier} VS {guerrier2.NomGuerrier}");
+        LancerCombat(guerrier1, guerrier2);
+
+        if (guerrier1.PointsDeVie > 0)
+        {
+            gagnants.Add(guerrier1);
+            perdants.Add(guerrier2);
+            guerriers.Remove(guerrier2);
+        }
+        else
+        {
+            gagnants.Add(guerrier2);
+            perdants.Add(guerrier1);
+            guerriers.Remove(guerrier1);
+        }
+    }
+
+    if (guerriers.Count == 1)
+    {
+        Console.WriteLine($"\nLe vainqueur du tournoi est : {guerriers[0].NomGuerrier}");
+        SauvegarderGagnant(guerriers[0], null);
+    }
+    else
+    {
+        Console.WriteLine("Tous les guerriers sont morts !");
+    }
+    RetourMenu();
+}
