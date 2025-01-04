@@ -2,6 +2,13 @@
 
 ![Image Présentation]("/Duels-de-guerriers_PART-II/refs/heads/main/Capture d’écran 2025-01-04 181850.jpg" "Accueuil").
 
+<picture>
+ <source media="(prefers-color-scheme: dark)" srcset="YOUR-DARKMODE-IMAGE">
+ <source media="(prefers-color-scheme: light)" srcset="YOUR-LIGHTMODE-IMAGE">
+ <img alt="ACCUEUIL" src="[/Duels-de-guerriers_PART-II/refs/heads/main/Capture d’écran 2025-01-04 181850.jpg](https://raw.githubusercontent.com/TreDozier-hub/Duels-de-guerriers_PART-II/refs/heads/main/Capture%20d%E2%80%99%C3%A9cran%202025-01-04%20181850.jpg)">
+</picture>
+
+
 ## **DUELS DE GUERRIERS : PART II**
 
 ### **Objectifs**
