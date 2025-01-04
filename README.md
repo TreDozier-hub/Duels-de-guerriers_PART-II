@@ -1,6 +1,6 @@
 # Duels-de-guerriers_PART-II
 
-![Image Présentation]("C:\Users\2ki\OneDrive\Bureau\Simplon.NET\Exo_Duel_De_Guerriers\Rendu\Capture d’écran 2025-01-04 181850.jpg" "Accueuil").
+![Image Présentation]("/Duels-de-guerriers_PART-II/refs/heads/main/Capture d’écran 2025-01-04 181850.jpg" "Accueuil").
 
 ## **DUELS DE GUERRIERS : PART II**
 
