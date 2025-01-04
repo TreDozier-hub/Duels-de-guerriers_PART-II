@@ -118,7 +118,7 @@ namespace Duels_de_guerriers_PART_II
                             "--------- CHOISIE TA SPECIALITE ---------\n",
                             "----------------------------------\n",
                             "\n", "(1) DUEL", "\n", "ou",
-                            "\n", "(2) BASTON GENERALE", "\n", @"         " + '\n',
+                            "\n", "(2) BASTON GENERALE", @"         " + '\n',
                 @"         " + '\n',
                 @"    _O   " + '\n',
                 @"   |/|_  " + '\n',
