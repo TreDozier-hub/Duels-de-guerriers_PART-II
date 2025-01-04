@@ -11,17 +11,17 @@ namespace Duels_de_guerriers_PART_II.ClassFolder
 
         public Elfe(string nom, int pointsDeVie, int nbDesAttaque) : base(nom, pointsDeVie, nbDesAttaque)
         {
-            PointsDeVie = pointsDeVie - 10;
+            TypeGuerrier = "Elfe";
         }
-        
+
         //int PointsDeVie = newPv - 10;
 
         // Réduit les points de vie
-        public string SubirDegats(int degats)
+        public override void SubirDegats(int degats)
         {
             //int newPv = PointsDeVie - 10;
             PointsDeVie -= degats - 2;
-            return "";
+            return;
         }
 
     }

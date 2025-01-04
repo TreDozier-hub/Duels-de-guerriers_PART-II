@@ -11,6 +11,7 @@ namespace Duels_de_guerriers_PART_II.ClassFolder
         private bool portArmure;
         public Nain(string nom, int pointsDeVie, int nbDesAttaque, bool portArmure) : base(nom, pointsDeVie, nbDesAttaque)
         {
+            TypeGuerrier = "Nain";
         }
 
         private bool ArmureLourde()
@@ -21,17 +22,17 @@ namespace Duels_de_guerriers_PART_II.ClassFolder
         }
 
         // Réduit les points de vie
-        public string SubirDegats(int degats)
+        public override void SubirDegats(int degats)
         {
             if (ArmureLourde())
             {
                 PointsDeVie -= degats / 2;
-                return "A bénéficié d'une Armure de la mort";
+                Console.WriteLine($"{NomGuerrier} subit {degats / 2} dégâts grâce à l'armure de la mort");
             }
             else
             {
                 PointsDeVie -= degats;
-                return PointsDeVie.ToString();// les dégâts change pas si l'armure est false
+                PointsDeVie.ToString();// les dégâts change pas si l'armure est false
             }
 
         }

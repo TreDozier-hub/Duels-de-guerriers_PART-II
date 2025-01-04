@@ -339,20 +339,12 @@ namespace Duels_de_guerriers_PART_II
                 string nom = VerifierSaisi<string>("Entrez le nom du guerrier : ", ConsoleColor.Yellow, ConsoleColor.DarkMagenta);
                 int pointsDeVie = VerifierSaisi<int>("Entrez les points de vie du guerrier: ", ConsoleColor.Black, ConsoleColor.White);
                 int nbDesAttaque = VerifierSaisi<int>("Entrez le nombre de dés d'attaque du guerrier : ", ConsoleColor.Black, ConsoleColor.White);
-                //if (int.TryParse(nbrAtk, out int nbDesAttaque))
-                //{ }
-                //else
-                //{
-                //    Console.BackgroundColor = ConsoleColor.Red;
-                //    Console.ForegroundColor = ConsoleColor.Black;
-                //    Console.WriteLine("Veuillez entrer un nombre valide.");
-                //    Console.ResetColor();
-                //}
-
+                
                 // "choixMenu" pour récupérer le choix (1, 2, 3) via la Console.ReadLine 
                 Console.WriteLine("Quel type de guerrier tu veux être");
-                Console.Write("\t\nGuerrier --- Nain --- Elfe --- Nazgûl \n");
-                Console.WriteLine("      (1)     (2)     (3)       (4)");
+                //Console.Write("\t\nGuerrier --- Nain --- Elfe --- Nazgûl \n");
+                //Console.WriteLine("      (1)     (2)     (3)       (4)");
+                Console.WriteLine("\t(1) Guerrier\n\t(2) Nain\n\t(3) Elfe\n\t(4) Nazgûl");
                 int quelGuerrier = VerifierSaisi<int>(" ", ConsoleColor.Black, ConsoleColor.White);
 
 
@@ -366,20 +358,24 @@ namespace Duels_de_guerriers_PART_II
 
                     case 2:
 
-                        Nain nain = new Nain(nom, pointsDeVie, nbDesAttaque, true);
-                        //bool estNain = bool.Parse(Console.ReadLine());
-                        //if (estNain)
-                        //{
-                        //Console.WriteLine("Le nain porte-t-il une armure ? (true/false) :");
-                        //bool portArmure = bool.Parse(Console.ReadLine());
-                        //new Nain(nom, pointsDeVie, nbDesAttaque, true);
+                        Console.WriteLine("Le nain porte-t-il une armure ? (o/n) :");
+                        string choixArmure = Console.ReadLine()?.ToLower();
+                        bool porteArmure = choixArmure == "o";
+
+                        if (porteArmure)
+                        {
+                            pointsDeVie -= 10; // Retire 10 points de vie si l'armure est prise
+                            Console.WriteLine("Tu as l'armure. Mais tu perds 10 points de vie.");
+                        }
+                        else if (choixArmure != "n")
+                        {
+                            Console.WriteLine("Choix invalide...");
+                            break; // Sortir du switch en cas de choix invalide
+                        }
+
+                        // Création du nain
+                        Nain nain = new Nain(nom, pointsDeVie, nbDesAttaque, porteArmure);
                         guerriers.Add(nain);
-                        //}
-                        //else
-                        //{
-                        //    guerrier = new Guerrier(nom, pointsDeVie, nbDesAttaque);
-                        //    guerriers.Add(guerrier);
-                        //}
                         break;
 
                     case 3:
@@ -411,7 +407,9 @@ namespace Duels_de_guerriers_PART_II
             {
                 Console.BackgroundColor = ConsoleColor.Yellow;
                 Console.ForegroundColor = ConsoleColor.Black;
-                Console.WriteLine($"{i + 1}. {guerriers[i].NomGuerrier} -> PV: {guerriers[i].PointsDeVie} / NA: {guerriers[i].NbAttaque} / Sorts attribués : {string.Join(", ", guerriers[i].SortsAssignes)}");
+                //Console.WriteLine($"{i + 1}. {guerriers[i].NomGuerrier} -> PV: {guerriers[i].PointsDeVie} / NA: {guerriers[i].NbAttaque} / Sorts attribués : {string.Join(", ", guerriers[i].SortsAssignes)}");
+                Console.WriteLine($"{i + 1}. Le {guerriers[i].TypeGuerrier} {guerriers[i].NomGuerrier} -> PV: {guerriers[i].PointsDeVie} / NA: {guerriers[i].NbAttaque} / Sorts attribués : {string.Join(", ", guerriers[i].SortsAssignes)}");
+                Console.ResetColor();
                 Console.ResetColor();
             }
             //Console.ResetColor();

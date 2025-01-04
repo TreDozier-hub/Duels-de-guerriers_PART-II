@@ -29,6 +29,8 @@ namespace Duels_de_guerriers_PART_II.ClassFolder
         // Liste des sorts assignés au guerrier
         public List<string> SortsAssignes { get; private set; } = new List<string>();
 
+        public string TypeGuerrier { get; set; }
+
         // Liste des utilisations restantes pour chaque sort assigné
         public List<int> SortsUtilises { get; private set; } = new List<int>();
 
@@ -42,6 +44,7 @@ namespace Duels_de_guerriers_PART_II.ClassFolder
             NbAttaque = nbDesAttaque;
             TirerSorts(); // Attribuer des sorts aléatoires à la création
             MaxPointsDeVie = pointsDeVie; // Initialisation des PV max
+            TypeGuerrier = "Guerrier";
         }
 
         // Méthode pour afficher les infos d'un guerrier
@@ -83,7 +86,7 @@ namespace Duels_de_guerriers_PART_II.ClassFolder
         }
 
         // Méthode subir dégats
-        public void SubirDegats(int degats)
+        public virtual void SubirDegats(int degats)
         {
             PointsDeVie -= degats;
             Console.WriteLine($"{NomGuerrier} subit {degats} dégâts et a maintenant {PointsDeVie} PV.");
