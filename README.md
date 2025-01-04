@@ -1,6 +1,6 @@
 # Duels-de-guerriers_PART-II
 
-![Image Présentation]("/Duels-de-guerriers_PART-II/refs/heads/main/Capture d’écran 2025-01-04 181850.jpg" "Accueuil").
+![Image Présentation](Capture%20d%E2%80%99%C3%A9cran%202025-01-04%20181850.jpg "Accueuil")
 
 <picture>
  <source media="(prefers-color-scheme: dark)" srcset="YOUR-DARKMODE-IMAGE">
