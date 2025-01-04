@@ -107,7 +107,7 @@ namespace Duels_de_guerriers_PART_II
             //};
             //    foreach (string line in lines)
             //    {
-            //        // Calculate the padding needed to center the text
+            //        // calcul espace 
             //        int padding = (consoleWidth - line.Length) / 2;
             //        Console.WriteLine(new string(' ', padding) + line);
             //    }
