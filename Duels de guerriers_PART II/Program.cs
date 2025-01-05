@@ -358,7 +358,7 @@ namespace Duels_de_guerriers_PART_II
                 //Console.WriteLine($"{i + 1}. {guerriers[i].NomGuerrier} -> PV: {guerriers[i].PointsDeVie} / NA: {guerriers[i].NbAttaque} / Sorts attribués : {string.Join(", ", guerriers[i].SortsAssignes)}");
                 Console.WriteLine($"{i + 1}. {guerriers[i].NomGuerrier} est un {guerriers[i].TypeGuerrier} -> PV: {guerriers[i].PointsDeVie} / NA: {guerriers[i].NbAttaque} / Sorts attribués : {string.Join(", ", guerriers[i].SortsAssignes)}");
                 Console.ResetColor();
-                AjouterGuerrier();
+                //AjouterGuerrier();
                 //Console.ResetColor();
             }            
         }
@@ -394,6 +394,7 @@ namespace Duels_de_guerriers_PART_II
             if (guerriers.Count < 2)
             {
                 Console.WriteLine("Pas assez de guerriers pour un duel !");
+                AjouterGuerrier();
                 return;
             }
 
@@ -426,6 +427,7 @@ namespace Duels_de_guerriers_PART_II
             // Remettre des PV si nécessaire
             RemettrePointsDeVie(guerrier1);
             RemettrePointsDeVie(guerrier2);
+
             Console.Clear();
             CentreAccueuil("----------------------------------\n",
                             "--------- MODE DE DUEL ---------\n",
@@ -517,6 +519,7 @@ namespace Duels_de_guerriers_PART_II
         // Methode pour lancer une baston générale
         static void LancerTournoi()
         {
+
 
             // Tant qu'il reste plus d'un guerrier
             Console.WriteLine("Début de la baston !");
