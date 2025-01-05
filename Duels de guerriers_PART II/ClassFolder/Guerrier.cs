@@ -42,7 +42,7 @@ namespace Duels_de_guerriers_PART_II.ClassFolder
             NomGuerrier = nom;
             PointsDeVie = pointsDeVie;
             NbAttaque = nbDesAttaque;
-            TirerSorts(); // Attribuer des sorts aléatoires à la création
+            //TirerSorts(); // Attribuer des sorts aléatoires à la création
             MaxPointsDeVie = pointsDeVie; // Initialisation des PV max
             TypeGuerrier = "Guerrier";
         }
@@ -89,7 +89,7 @@ namespace Duels_de_guerriers_PART_II.ClassFolder
         public virtual void SubirDegats(int degats)
         {
             PointsDeVie -= degats;
-            Console.WriteLine($"{NomGuerrier} subit {degats} dégâts et a maintenant {PointsDeVie} PV.");
+            Console.WriteLine($"{NomGuerrier} subit {degats} dégâts --> {PointsDeVie} PV.");
         }
 
         // Méthode esquive (réduit les dégâts reçus de moitié)
@@ -163,22 +163,24 @@ namespace Duels_de_guerriers_PART_II.ClassFolder
             }
         }
 
-        // Méthode pour vérifier les saisi numérique
-        public static int ObtenirEntierValide()
+        
+
+        public void ExecuterAction(int choix, Guerrier adversaire)
         {
-            int resultat;
-            while (true)
+            switch (choix)
             {
-                //Console.Write(message);
-                string saisie = Console.ReadLine();
-                if (int.TryParse(saisie, out resultat))
-                {
-                    return resultat;
-                }
-                Console.BackgroundColor = ConsoleColor.Red;
-                Console.ForegroundColor = ConsoleColor.Black;
-                Console.Write("Veuillez entrer un nombre valide.");
-                Console.ResetColor();
+                case 1:
+                    adversaire.SubirDegats(Attaquer());
+                    break;
+                case 2:
+                    Esquiver();
+                    break;
+                case 3:
+                    UtiliserPotion();
+                    break;
+                default:
+                    Console.WriteLine("Action invalide, aucun effet.");
+                    break;
             }
         }
 

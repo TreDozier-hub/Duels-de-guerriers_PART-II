@@ -18,23 +18,7 @@ namespace Duels_de_guerriers_PART_II
             TypeCombats();
         }
 
-        static string SaisiCouleur(string message, ConsoleColor couleurTexte, ConsoleColor couleurFond)
-        {
-            // Afficher le message avec les couleurs par défaut
-            Console.ResetColor();
-            Console.Write(message);
-
-            // Appliquer les couleurs spécifiées pour la saisie avec des espaces
-            Console.ForegroundColor = couleurTexte;
-            Console.BackgroundColor = couleurFond;
-            Console.Write(" "); // Espace avant
-            string saisie = Console.ReadLine();
-            Console.Write(" "); // Espace après
-
-            // Réinitialiser les couleurs après la saisie
-            Console.ResetColor();
-            return saisie;
-        }
+        
         static T VerifierSaisi<T>(string message, ConsoleColor couleurTexte, ConsoleColor couleurFondTexte)
         {
             T resultat = default(T);
@@ -81,6 +65,26 @@ namespace Duels_de_guerriers_PART_II
 
             return resultat;
         }
+
+        // Méthode pour vérifier les saisi numérique
+        static int ObtenirEntierValide(string message)
+        {
+            int resultat;
+            while (true)
+            {
+                //Console.Write(message);
+                string saisie = Console.ReadLine();
+                if (int.TryParse(saisie, out resultat))
+                {
+                    return resultat;
+                }
+                Console.BackgroundColor = ConsoleColor.Red;
+                Console.ForegroundColor = ConsoleColor.Black;
+                Console.Write("Veuillez entrer un nombre valide.");
+                Console.ResetColor();
+            }
+        }
+
         // Methode pour afficher le menu secondaire
         static void TypeCombats()
         {
@@ -112,8 +116,6 @@ namespace Duels_de_guerriers_PART_II
             //        Console.WriteLine(new string(' ', padding) + line);
             //    }
 
-
-
             CentreAccueuil("----------------------------------\n",
                             "--------- CHOISIE TA SPECIALITE ---------\n",
                             "----------------------------------\n",
@@ -129,7 +131,7 @@ namespace Duels_de_guerriers_PART_II
                 @"    |)   " + '\n',
                 @"    |    " + '\n',
                 @"   < \   "
-                                    , "\n", "\n", " (3) Menu Principal ");                          
+                                    , "\n", "\n", " (3) Menu Principal ");
             Console.ResetColor();
 
             // switch case pour le choix du menu
@@ -260,50 +262,9 @@ namespace Duels_de_guerriers_PART_II
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.Write(new string('-', largeurMaxBarre - largeurBarre)); // Partie vide
             Console.ResetColor();
-            Console.Write($"{pointsDeVieActuels}/{pointsDeVieMax} PV");
+            Console.Write($"{pointsDeVieActuels}/{pointsDeVieMax} PV\n");
 
         }
-
-        // Méthode pour afficher les logs de combat sous les barres
-        //public static void AfficherLogDeCombat(string message, ref int ligneCourante)
-        //{
-        //    // Les logs commencent à la ligne 2
-        //    Console.SetCursorPosition(0, ligneCourante);
-        //    Console.Write(new string(' ', Console.WindowWidth)); // Nettoie la ligne
-        //    Console.SetCursorPosition(0, ligneCourante);
-        //    Console.Write(message);
-        //    ligneCourante++; // Passe à la ligne suivante
-
-        //    // Si trop de lignes, réinitialiser la zone des logs
-        //    if (ligneCourante > 20) // Limite arbitraire
-        //    {
-        //        ligneCourante = 4; // Retourne à la ligne juste sous les barres
-        //        EffacerZoneDeCombat(2, 20); // Nettoie les anciennes lignes
-        //    }
-        //}
-
-        // Méthode pour effacer une zone spécifique de la console
-        //public static void EffacerZoneDeCombat(int debut, int fin)
-        //{
-        //    for (int i = debut; i <= fin; i++)
-        //    {
-        //        Console.SetCursorPosition(0, i);
-        //        Console.Write(new string(' ', Console.WindowWidth)); // Nettoie la ligne
-        //    }
-        //}
-
-        //public static void AfficherLogCombat(string message)
-        //{
-        //    Console.SetCursorPosition(0, 5); // Commence à la ligne sous les barres
-        //    Console.Write(new string(' ', Console.WindowWidth)); // Nettoie la ligne
-        //    Console.SetCursorPosition(0, 5);
-        //    Console.WriteLine(message);
-        //}
-
-        //Console.BackgroundColor = ConsoleColor.Red;
-        //        Console.ForegroundColor = ConsoleColor.Black;
-        //        Console.WriteLine("Veuillez entrer un nombre valide.");
-        //        Console.ResetColor();
 
         // Methode pour afficher la liste des sort (bonus ou pas)
         static void AfficherSorts()
@@ -327,7 +288,6 @@ namespace Duels_de_guerriers_PART_II
             }
         }
 
-        // Methode pour ajouter des guerriers en fonction de "nbr" 
         static void AjouterGuerrier()
         {
             //Console.Write("Combien de guerriers voulez-vous créer ? : ");
@@ -342,57 +302,45 @@ namespace Duels_de_guerriers_PART_II
                 
                 // "choixMenu" pour récupérer le choix (1, 2, 3) via la Console.ReadLine 
                 Console.WriteLine("Quel type de guerrier tu veux être");
-                //Console.Write("\t\nGuerrier --- Nain --- Elfe --- Nazgûl \n");
-                //Console.WriteLine("      (1)     (2)     (3)       (4)");
-                Console.WriteLine("\t(1) Guerrier\n\t(2) Nain\n\t(3) Elfe\n\t(4) Nazgûl");
+                Console.Write("\t\nGuerrier --- Nain --- Elfe --- Nazgûl \n");
+                Console.WriteLine("      (1)     (2)     (3)       (4)");
                 int quelGuerrier = VerifierSaisi<int>(" ", ConsoleColor.Black, ConsoleColor.White);
 
 
                 switch (quelGuerrier)
                 {
                     case 1:
-                        Guerrier guerrier = new Guerrier(nom, pointsDeVie, nbDesAttaque);
-                        guerriers.Add(guerrier);
-
+                        guerriers.Add(new Guerrier(nom, pointsDeVie, nbDesAttaque));
                         break;
-
                     case 2:
-
-                        Console.WriteLine("Le nain porte-t-il une armure ? (o/n) :");
+                        Console.Write("Le nain porte-t-il une armure ? (o/n) :");
+                        Console.WriteLine($"Tu perdra 5 points de vie. Mais il taidera \n");
                         string choixArmure = Console.ReadLine()?.ToLower();
-                        bool porteArmure = choixArmure == "o";
-
-                        if (porteArmure)
+                        if (choixArmure == "o")
                         {
-                            pointsDeVie -= 10; // Retire 10 points de vie si l'armure est prise
-                            Console.WriteLine("Tu as l'armure. Mais tu perds 10 points de vie.");
+                            pointsDeVie -= 10; // Retire 10 points de vie si l'armure est prie                            
+                            System.Threading.Thread.Sleep(300);
                         }
-                        else if (choixArmure != "n")
+                        else if (choixArmure == "n")
                         {
-                            Console.WriteLine("Choix invalide...");
-                            break; // Sortir du switch en cas de choix invalide
+                            Console.Write("Choix invalide...");
                         }
-
                         // Création du nain
-                        Nain nain = new Nain(nom, pointsDeVie, nbDesAttaque, porteArmure);
+                        Nain nain = new Nain(nom, pointsDeVie, nbDesAttaque, true);
                         guerriers.Add(nain);
                         break;
-
                     case 3:
-                        Elfe elfe = new Elfe(nom, pointsDeVie, nbDesAttaque);
-                        guerriers.Add(elfe);
+                        guerriers.Add(new Elfe(nom, pointsDeVie, nbDesAttaque));
                         break;
-
                     case 4:
-                        Nazgul nazgul = new Nazgul(nom, pointsDeVie, nbDesAttaque);
-                        guerriers.Add(nazgul);
+                        Console.WriteLine("Le Nazgûl donne des coups d'épée foudroyant\n", "Mais tu pars avec 10 PV de moins");
+                        guerriers.Add(new Nazgul(nom, pointsDeVie, nbDesAttaque));
                         break;
-
                     default:
-                        Console.WriteLine("Choix invalide. Again ti !");
-                        System.Threading.Thread.Sleep(500);
+                        Console.WriteLine("Choix invalide. On reprend ce guerrier !");
+                        i--; // Permet de répéter l'itération pour un choix valide.
                         break;
-                }                
+                }
             }
         }
 
@@ -408,11 +356,11 @@ namespace Duels_de_guerriers_PART_II
                 Console.BackgroundColor = ConsoleColor.Yellow;
                 Console.ForegroundColor = ConsoleColor.Black;
                 //Console.WriteLine($"{i + 1}. {guerriers[i].NomGuerrier} -> PV: {guerriers[i].PointsDeVie} / NA: {guerriers[i].NbAttaque} / Sorts attribués : {string.Join(", ", guerriers[i].SortsAssignes)}");
-                Console.WriteLine($"{i + 1}. Le {guerriers[i].TypeGuerrier} {guerriers[i].NomGuerrier} -> PV: {guerriers[i].PointsDeVie} / NA: {guerriers[i].NbAttaque} / Sorts attribués : {string.Join(", ", guerriers[i].SortsAssignes)}");
+                Console.WriteLine($"{i + 1}. {guerriers[i].NomGuerrier} est un {guerriers[i].TypeGuerrier} -> PV: {guerriers[i].PointsDeVie} / NA: {guerriers[i].NbAttaque} / Sorts attribués : {string.Join(", ", guerriers[i].SortsAssignes)}");
                 Console.ResetColor();
-                Console.ResetColor();
-            }
-            //Console.ResetColor();
+                AjouterGuerrier();
+                //Console.ResetColor();
+            }            
         }
 
         // Methode pour afficher la liste des guerriers via le menu principal
@@ -423,7 +371,11 @@ namespace Duels_de_guerriers_PART_II
             Console.ForegroundColor = ConsoleColor.Black;
             ListeGuerriers();
             Console.ResetColor();
-            RetourMenu();            
+            Console.WriteLine("");
+            AjouterGuerrier();
+            SupprimerGuerrier();
+            Console.ResetColor();
+            RetourMenu();
         }
 
         string[] CadreTitre(string titre)
@@ -474,6 +426,26 @@ namespace Duels_de_guerriers_PART_II
             // Remettre des PV si nécessaire
             RemettrePointsDeVie(guerrier1);
             RemettrePointsDeVie(guerrier2);
+            Console.Clear();
+            CentreAccueuil("----------------------------------\n",
+                            "--------- MODE DE DUEL ---------\n",
+                            "----------------------------------\n"
+                            , "\n", "\n", "\n"
+                            , "1. Automatique"
+                            , "\n", "\n"
+                            , "2. Coup par Coup","\n");
+
+
+            //Console.WriteLine("Mode de duel : 1. Automatique | 2. CoupParCoup");
+            int mode = ObtenirEntierValide("Choix : ");
+
+            if (mode == 2)
+            {
+                DuelCoupParCoup(guerrier1, guerrier2);
+            }
+
+
+            //RetourMenu();
 
             Console.Clear();
             Console.WriteLine($"\nDébut du duel : {guerrier1.NomGuerrier} contre {guerrier2.NomGuerrier} !\n");
@@ -521,74 +493,26 @@ namespace Duels_de_guerriers_PART_II
             System.Threading.Thread.Sleep(300);
         }
 
-        //static void GuerriersDuel()
-        //{
-        //    ListeGuerriers();
+        static void DuelCoupParCoup(Guerrier guerrier1, Guerrier guerrier2)
+        {
+            Console.Clear();
+            Console.WriteLine($"Duel CoupParCoup : {guerrier1.NomGuerrier} VS {guerrier2.NomGuerrier}");
+            while (guerrier1.PointsDeVie > 0 && guerrier2.PointsDeVie > 0)
+            {
+                Console.WriteLine($"{guerrier1.NomGuerrier} tu : 1. Attaque | 2. Esquive | 3. Potion");
+                int action1 = ObtenirEntierValide("Action : ");
+                guerrier1.ExecuterAction(action1, guerrier2);
 
-        //    Console.WriteLine("Choisissez le numéro du premier guerrier pour le duel :");
-        //    int choix1 = int.Parse(Console.ReadLine()) - 1;
-        //    Console.WriteLine("Choisissez le numéro du deuxième guerrier pour le duel :");
-        //    int choix2 = int.Parse(Console.ReadLine()) - 1;
+                if (guerrier2.PointsDeVie <= 0) break;
 
-        //    Guerrier guerrier1 = guerriers[choix1];
-        //    Guerrier guerrier2 = guerriers[choix2];
+                Console.WriteLine($"{guerrier2.NomGuerrier} tu : 1. Attaque | 2. Esquive | 3. Potion");
+                int action2 = ObtenirEntierValide("Action : ");
+                guerrier2.ExecuterAction(action2, guerrier1);
+            }
+            Console.WriteLine(guerrier1.PointsDeVie > 0 ? $"{guerrier1.NomGuerrier} gagne !" : $"{guerrier2.NomGuerrier} gagne !");
+            SauvegarderGagnant(guerrier2, guerrier1);
 
-        //    Console.Clear();
-        //    Console.WriteLine("Début du duel !");
-
-        //    while (guerrier1.PointsDeVie > 0 && guerrier2.PointsDeVie > 0)
-        //    {
-        //        Console.WriteLine($"C'est au tour de {guerrier1.NomGuerrier}. Que voulez-vous faire ?");
-        //        Console.WriteLine("1. Attaquer");
-        //        if (guerrier1.SortsAssignes.Contains("Esquive") && guerrier1.SortsUtilises[guerrier1.SortsAssignes.IndexOf("Esquive")] > 0)
-        //            Console.WriteLine("2. Esquiver");
-        //        if (guerrier1.SortsAssignes.Contains("Potion") && guerrier1.SortsUtilises[guerrier1.SortsAssignes.IndexOf("Potion")] > 0)
-        //            Console.WriteLine("3. Utiliser une potion");
-        //        if (guerrier1.SortsAssignes.Contains("Coup Puissant") && guerrier1.SortsUtilises[guerrier1.SortsAssignes.IndexOf("Coup Puissant")] > 0)
-        //            Console.WriteLine("4. Coup puissant");
-
-        //        int action1 = int.Parse(Console.ReadLine());
-        //        int degats1 = 0;
-
-        //        switch (action1)
-        //        {
-        //            case 1:
-        //                degats1 = guerrier1.Attaquer();
-        //                break;
-        //            case 2:
-        //                if (guerrier1.SortsAssignes.Contains("Esquive") && guerrier1.SortsUtilises[guerrier1.SortsAssignes.IndexOf("Esquive")] > 0) guerrier1.Esquiver();
-        //                else Console.WriteLine("Sort non disponible ou plus d'utilisations restantes !");
-        //                break;
-        //            case 3:
-        //                if (guerrier1.SortsAssignes.Contains("Potion") && guerrier1.SortsUtilises[guerrier1.SortsAssignes.IndexOf("Potion")] > 0) guerrier1.UtiliserPotion();
-        //                else Console.WriteLine("Sort non disponible ou plus d'utilisations restantes !");
-        //                break;
-        //            case 4:
-        //                if (guerrier1.SortsAssignes.Contains("Coup Puissant") && guerrier1.SortsUtilises[guerrier1.SortsAssignes.IndexOf("Coup Puissant")] > 0) guerrier1.CoupPuissant();
-        //                else Console.WriteLine("Sort non disponible ou plus d'utilisations restantes !");
-        //                break;
-        //            default:
-        //                Console.WriteLine("Action invalide !");
-        //                break;
-        //        }
-
-        //        guerrier2.SubirDegats(degats1);
-        //        if (guerrier2.PointsDeVie <= 0)
-        //        {
-        //            Console.WriteLine($"{guerrier1.NomGuerrier} a gagné le duel !");
-        //            return;
-        //        }
-
-        //        if (guerrier1.PointsDeVie <= 0)
-        //        {
-        //            Console.WriteLine($"{guerrier2.NomGuerrier} a gagné le duel !");
-        //            SauvegarderGagnant(guerrier2);
-        //            return;
-        //        }
-
-        //    }
-        //    MenuPrincipal();
-        //}
+        }
 
         // Methode pour lancer une baston générale
         static void LancerTournoi()
@@ -676,7 +600,7 @@ namespace Duels_de_guerriers_PART_II
             System.Threading.Thread.Sleep(300);
             //MenuPrincipal();
         }
-        
+
 
         static void TournoiAutomatique()
         {
@@ -693,7 +617,7 @@ namespace Duels_de_guerriers_PART_II
                                                                                          @"    |)   " + '\n',
                                                                                          @"    |    " + '\n',
                                                                                          @"   < \   ", "\n", "\n", "Tu veux des guerriers : o/n "
-                                                                                         , "\n", "\n", "Ou clic une autre touche pour retourner au m");
+                                                                                         , "\n", "\n");
                 string ajoutListe = Console.ReadLine();
                 if (ajoutListe == "o")
                 {
@@ -701,7 +625,11 @@ namespace Duels_de_guerriers_PART_II
                     AjouterGuerrier();
                     ListeGuerriers();
                 }
-                TournoiAutomatique();
+                else if (ajoutListe == "n")
+                {
+                    MenuPrincipal();
+                }
+                RetourMenu();
                 return;
             }
 
@@ -868,7 +796,7 @@ namespace Duels_de_guerriers_PART_II
         }
 
 
-        
+
         public static void ReinitialiserPerdants()
         {
             if (perdants.Count == 0)
@@ -949,14 +877,8 @@ namespace Duels_de_guerriers_PART_II
                 Console.WriteLine("Aucun guerrier à supprimer.\n");
                 return;
             }
-
-            Console.WriteLine("Liste des guerriers :");
-            for (int i = 0; i < guerriers.Count; i++)
-            {
-                Console.WriteLine($"{i + 1}. {guerriers[i].NomGuerrier}");
-            }
-
-            Console.Write("\nEntrez le numéro du guerrier à supprimer (ou 0 pour annuler) : ");
+            Console.Write("\nTu veux supprimer 1 ou plusieurs gurriers ?");
+            Console.Write("\nEntrez le numéro du guerrier (ou 0 pour annuler) : ");
             if (int.TryParse(Console.ReadLine(), out int choix) && choix > 0 && choix <= guerriers.Count)
             {
                 Guerrier guerrierSupprime = guerriers[choix - 1];
@@ -982,24 +904,6 @@ namespace Duels_de_guerriers_PART_II
             }
         }
 
-        //static void ReinitialiserListes()
-        //{
-        //    // Sauvegarder les gagnants et perdants avant la réinitialisation
-        //    string timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
-        //    string fichierGagnants = $"Gagnants_{timestamp}.txt";
-        //    string fichierPerdants = $"Perdants_{timestamp}.txt";
 
-        //    // Sauvegarder les gagnants
-        //    File.WriteAllLines(fichierGagnants, gagnants.Select(g => g.NomGuerrier));
-        //    File.WriteAllLines(fichierPerdants, perdants.Select(p => p.NomGuerrier));
-
-        //    Console.WriteLine($"Les listes ont été sauvegardées dans :\n- {fichierGagnants}\n- {fichierPerdants}");
-
-        //    // Réinitialiser les listes
-        //    gagnants.Clear();
-        //    perdants.Clear();
-
-        //    Console.WriteLine("Les listes gagnants et perdants ont été réinitialisées.");
-        //}
     }
 }
