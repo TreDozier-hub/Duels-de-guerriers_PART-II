@@ -92,7 +92,7 @@ namespace Duels_de_guerriers_PART_II.ClassFolder
             Console.WriteLine($"{NomGuerrier} subit {degats} dégâts --> {PointsDeVie} PV.");
         }
 
-        // Méthode esquive (réduit les dégâts reçus de moitié)
+        // Méthode esquive
         public void Esquiver()
         {
             int index = SortsAssignes.IndexOf("Esquive");
