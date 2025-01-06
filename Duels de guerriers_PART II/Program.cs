@@ -304,7 +304,7 @@ namespace Duels_de_guerriers_PART_II
         }
 
             // Methode pour afficher la liste des sort (bonus ou pas)
-            static void AfficherSorts()
+        static void AfficherSorts()
         {
             Console.Clear();
             CentreAccueuil("---------------------------\n",

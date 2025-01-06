@@ -1,5 +1,5 @@
 {\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1036{\fonttbl{\f0\fnil Cascadia Mono;}{\f1\fnil\fcharset0 Cascadia Mono;}{\f2\fnil\fcharset0 Calibri;}{\f3\fnil\fcharset2 Symbol;}}
-{\colortbl ;\red0\green0\blue0;\red255\green255\blue255;}
+{\colortbl ;\red0\green0\blue0;\red255\green255\blue255;\red0\green128\blue0;\red43\green145\blue175;\red0\green0\blue255;\red163\green21\blue21;}
 {\*\generator Riched20 10.0.22621}\viewkind4\uc1 
 \pard\sa200\sl276\slmult1\qc\cf1\highlight2\f0\fs19\lang12 Duel\f1\lang1036 s \f0\lang12 de\f1\lang1036  \f0\lang12 guerriers\f1\lang1036  \f0\lang12 PART\f1\lang1036  I - \f0\lang12 II\f1\lang1036  - III\par
 \par
@@ -44613,14 +44613,35 @@ f7f710101008080810101008080810101008080810101008080810101008080810101008080810
 0000002701ffff030000000000
 }\par
 
-\pard\sa200\sl276\slmult1\cf0\highlight0\f2\fs22\lang12 Liste des Methodes dans la Class Guerrier \par
+\pard\sa200\sl276\slmult1\cf0\highlight0\b\f2\fs22\lang12 Projet comprend :\par
+\b0 - Class Guerrier.cs\par
+- Class Nain.cs --> qui hirite de Guerrier\par
+- Class Nasg\'fbl.cs --> qui hirite de Guerrier\par
+- Class Elfe.cs --> qui hirite de Guerrier\par
+- Program.cs\b\par
+Liste des Methodes dans la Class Guerrier \par
 
-\pard{\pntext\f3\'B7\tab}{\*\pn\pnlvlblt\pnf3\pnindent0{\pntxtb\'B7}}\fi-360\li720\sa200\sl240\slmult1 Attaquer()\par
-{\pntext\f3\'B7\tab} TirerSorts\par
-{\pntext\f3\'B7\tab}Esquiver()\par
-{\pntext\f3\'B7\tab}\par
+\pard{\pntext\f3\'B7\tab}{\*\pn\pnlvlblt\pnf3\pnindent0{\pntxtb\'B7}}\fi-360\li720\sa200\sl240\slmult1\b0\fs20 Attaquer()\par
+{\pntext\f3\'B7\tab} TirerSorts() --> \highlight2 Tirer un nombre al\'e9atoire de sorts entre 1 et 3 par guerriers\highlight0\par
+{\pntext\f3\'B7\tab}Esquiver() --> Boll 1 fois sur 2\par
+{\pntext\f3\'B7\tab}UtiliserPotion() --> avec 25% de chance que \'e7a fonctionne. Restore 5 PV\par
+{\pntext\f3\'B7\tab}CoupPuissant --> "Coup de h\'e2che", 10 PV de moins - 25% de chance que \'e7a fonctionne \par
+
+\pard\sa200\sl240\slmult1\tab\i Il y  d'autres sorts (coups) en pr\'e9partion qui sont indiqu\'e9s dans ma liste, mais pas encore mis en Methodes.\cf3\highlight2\i0\f0\par
+\cf4\i List\cf1 <\cf5 string\cf1 > sortsDisponibles = \cf5 new\cf1  \cf4 List\cf1 <\cf5 string\cf1 > \{ \cf6 "Esquive"\cf1 , \cf6 "Potion"\cf1 , \cf6 "Coup Puissant"\cf1 , \cf6\strike "Bouclier Magique"\cf1 , \cf6 "Regain d'\f1\'c9nergie"\cf1  \strike0\};\cf0\highlight0\f2\par
+
+\pard{\pntext\f3\'B7\tab}{\*\pn\pnlvlblt\pnf3\pnindent0{\pntxtb\'B7}}\fi-360\li720\sa200\sl240\slmult1\cf1\highlight2\i0 ChoisirActionAutomatique\lang1036 () --> pour pouvoir utiliser les sorts (coups) al\'e9atoirement pour les tournois ou duels automatique\cf0\highlight0\fs22\lang12\par
 
 \pard\sa200\sl240\slmult1\par
+
+\pard\sa200\sl276\slmult1\b Liste des Methodes principales  dans Program\par
+\par
+\tab\par
+
+\pard\sa200\sl240\slmult1\b0\par
+\par
+\par
+\par
 
 \pard\sa200\sl276\slmult1\par
 }
