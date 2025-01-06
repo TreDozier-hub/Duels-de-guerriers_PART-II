@@ -51,7 +51,7 @@
 - `Guerrier.cs` : Définit la classe de base `Guerrier`.
 - `Nain.cs` : Définit la classe `Nain` qui hérite de `Guerrier`.
 - `Elfe.cs` : Définit la classe `Elfe` qui hérite de `Guerrier`.
-- - `Nazgul.cs` : Définit la classe `Nazgûl` qui hérite de `Guerrier`.
+- `Nazgul.cs` : Définit la classe `Nazgûl` qui hérite de `Guerrier`.
 - `Program.cs` : Contient la méthode `Main` pour tester le programme.
 
 ---
