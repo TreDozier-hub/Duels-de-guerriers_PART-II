@@ -81,8 +81,8 @@ namespace Duels_de_guerriers_PART_II.ClassFolder
                 }
             }
 
-            // Debugging pour vérifier les sorts tirés
-            //Console.WriteLine($"Sorts attribués à {NomGuerrier} : {string.Join(", ", SortsAssignes)} avec {string.Join(", ", SortsUtilises)} utilisations chacune.");
+            //Pour vérifier les sorts tirés
+            Console.WriteLine($"Sorts attribués à {NomGuerrier} : {string.Join(", ", SortsAssignes)} avec {string.Join(", ", SortsUtilises)} utilisations chacune.");
         }
 
         // Méthode subir dégats
@@ -246,7 +246,7 @@ namespace Duels_de_guerriers_PART_II.ClassFolder
                     break;
             }
 
-            return 0; // Si l'action n'a pas été exécutée, aucun dégât
+            return 0; // Si l'action n'a pas été exécutée, aucun dégât. J'espère
         }
     }
 }
