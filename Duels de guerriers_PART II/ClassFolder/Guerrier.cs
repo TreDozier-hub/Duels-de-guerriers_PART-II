@@ -92,7 +92,7 @@ namespace Duels_de_guerriers_PART_II.ClassFolder
             Console.WriteLine($"{NomGuerrier} subit {degats} dégâts --> {PointsDeVie} PV.");
         }
 
-        // Méthode esquive
+        // Méthode esquive evite coups (fonctionne 1 fois sur 2)
         public void Esquiver()
         {
             int index = SortsAssignes.IndexOf("Esquive");
@@ -115,17 +115,18 @@ namespace Duels_de_guerriers_PART_II.ClassFolder
             }
         }
 
-        // HMethode potion magique (restore 10 PV)
+        // HMethode potion magique (restore 5 PV)
+        // avec 25% de chance que ça fonctionne (lancerDe.Next(0, 4))
         public void UtiliserPotion()
         {
             int index = SortsAssignes.IndexOf("Potion");
             if (index != -1 && SortsUtilises[index] > 0)
             {
                 int pointsSoignes = 5;
-                if (lancerDe.Next(0, 4) == 0) // 25% probability to heal
+                if (lancerDe.Next(0, 4) == 0)
                 {
                     PointsDeVie += pointsSoignes;
-                    Console.WriteLine($"{NomGuerrier}, Guérison réussie ! Tu as gagné {pointsSoignes} PV. PV actuels : {PointsDeVie}");
+                    Console.WriteLine($"{NomGuerrier}, Guérison réussie ! PV actuels : {PointsDeVie}");
                 }
                 else
                 {
@@ -135,7 +136,7 @@ namespace Duels_de_guerriers_PART_II.ClassFolder
             }
             else
             {
-                Console.WriteLine("Potion non disponible ou plus d'utilisations restantes !");
+                Console.WriteLine("Potion plus disponible !");
             }
         }
 
@@ -146,10 +147,10 @@ namespace Duels_de_guerriers_PART_II.ClassFolder
             if (index != -1 && SortsUtilises[index] > 0)
             {
                 int coupHache = 10;
-                if (lancerDe.Next(0, 5) == 0) // 10% 
+                if (lancerDe.Next(0, 4) == 0) // 25%
                 {
                     PointsDeVie += coupHache;
-                    Console.WriteLine($"{NomGuerrier} subit un coup de hache et a maintenant {PointsDeVie} PV.");
+                    Console.WriteLine($"{NomGuerrier}, un coup de hache dans ta face. - {PointsDeVie} PV.");
                 }
                 else
                 {
@@ -159,7 +160,7 @@ namespace Duels_de_guerriers_PART_II.ClassFolder
             }
             else
             {
-                Console.WriteLine("Coup Puissant non disponible ou plus d'utilisations restantes !");
+                Console.WriteLine("Coup Puissant plus disponible !");
             }
         }
 
@@ -186,19 +187,19 @@ namespace Duels_de_guerriers_PART_II.ClassFolder
 
         public string ChoisirActionAutomatique(Guerrier adversaire)
         {
-            // Utiliser une potion si les PV sont faibles (par exemple, < 30% du maximum)
+            // Utiliser une potion si les PV sont faibles (< 30% du maximum)
             if (SortsAssignes.Contains("Potion") && SortsUtilises[SortsAssignes.IndexOf("Potion")] > 0 && PointsDeVie <= MaxPointsDeVie * 0.3)
             {
                 return "Potion";
             }
 
             // Esquiver si l'adversaire a un sort puissant disponible
-            if (SortsAssignes.Contains("Esquive") && SortsUtilises[SortsAssignes.IndexOf("Esquive")] > 0 && adversaire.APeutLancerCoupPuissant())
+            if (SortsAssignes.Contains("Esquive") && SortsUtilises[SortsAssignes.IndexOf("Esquive")] > 0 && adversaire.LancerCoupPuissant())
             {
                 return "Esquive";
             }
 
-            // Utiliser un coup puissant si disponible et si les PV de l'adversaire sont faibles
+            // Utiliser un coup puissant si les PV de l'adversaire sont faibles
             if (SortsAssignes.Contains("Coup Puissant") && SortsUtilises[SortsAssignes.IndexOf("Coup Puissant")] > 0 && adversaire.PointsDeVie <= MaxPointsDeVie * 0.4)
             {
                 return "Coup Puissant";
@@ -208,7 +209,7 @@ namespace Duels_de_guerriers_PART_II.ClassFolder
             return "Attaquer";
         }
 
-        public bool APeutLancerCoupPuissant()
+        public bool LancerCoupPuissant()
         {
             return SortsAssignes.Contains("Coup Puissant") && SortsUtilises[SortsAssignes.IndexOf("Coup Puissant")] > 0;
         }
@@ -236,12 +237,13 @@ namespace Duels_de_guerriers_PART_II.ClassFolder
                     }
                     break;
 
-                //case "Coup Puissant":
-                //    if (SortsAssignes.Contains("Coup Puissant") && SortsUtilises[SortsAssignes.IndexOf("Coup Puissant")] > 0)
-                //    {
-                //        return CoupPuissant();
-                //    }
-                //    break;
+                case "Coup Puissant":
+                    if (SortsAssignes.Contains("Coup Puissant") && SortsUtilises[SortsAssignes.IndexOf("Coup Puissant")] > 0)
+                    {
+                        CoupPuissant();
+
+                    }
+                    break;
             }
 
             return 0; // Si l'action n'a pas été exécutée, aucun dégât
