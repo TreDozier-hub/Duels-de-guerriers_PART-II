@@ -188,34 +188,61 @@ namespace Duels_de_guerriers_PART_II.ClassFolder
             }
         }
 
+        //public string ChoisirActionAutomatique(Guerrier adversaire)
+        //{
+        //    // Utiliser une potion si les PV sont faibles (< 30% du maximum)
+        //    if (SortsAssignes.Contains("Potion") && SortsUtilises[SortsAssignes.IndexOf("Potion")] > 0 && PointsDeVie <= MaxPointsDeVie * 0.3)
+        //    {
+        //        return "Potion";
+        //    }
+
+        //    // Esquiver si l'adversaire a un sort puissant disponible
+        //    if (SortsAssignes.Contains("Esquive") && SortsUtilises[SortsAssignes.IndexOf("Esquive")] > 0 && adversaire.LancerCoupPuissant())
+        //    {
+        //        return "Esquive";
+        //    }
+
+        //    // Utiliser un coup puissant si les PV de l'adversaire sont faibles
+        //    if (SortsAssignes.Contains("Coup Puissant") && SortsUtilises[SortsAssignes.IndexOf("Coup Puissant")] > 0 && adversaire.PointsDeVie <= MaxPointsDeVie * 0.4)
+        //    {
+        //        return "Coup Puissant";
+        //    }
+
+        //    // Par défaut, attaquer
+        //    return "Attaquer";
+        //}
+
         public string ChoisirActionAutomatique(Guerrier adversaire)
         {
-            // Utiliser une potion si les PV sont faibles (< 30% du maximum)
-            if (SortsAssignes.Contains("Potion") && SortsUtilises[SortsAssignes.IndexOf("Potion")] > 0 && PointsDeVie <= MaxPointsDeVie * 0.3)
+            // Liste des actions possibles
+            List<string> actionsDisponibles = new List<string>();
+
+            // Ajouter les sorts encore utilisables
+            for (int i = 0; i < SortsAssignes.Count; i++)
             {
-                return "Potion";
+                if (SortsUtilises[i] > 0)
+                {
+                    actionsDisponibles.Add(SortsAssignes[i]);
+                }
             }
 
-            // Esquiver si l'adversaire a un sort puissant disponible
-            if (SortsAssignes.Contains("Esquive") && SortsUtilises[SortsAssignes.IndexOf("Esquive")] > 0 && adversaire.LancerCoupPuissant())
-            {
-                return "Esquive";
-            }
+            // Ajouter l'attaque comme option par défaut
+            actionsDisponibles.Add("Attaquer");
 
-            // Utiliser un coup puissant si les PV de l'adversaire sont faibles
-            if (SortsAssignes.Contains("Coup Puissant") && SortsUtilises[SortsAssignes.IndexOf("Coup Puissant")] > 0 && adversaire.PointsDeVie <= MaxPointsDeVie * 0.4)
-            {
-                return "Coup Puissant";
-            }
+            // Choisir une action aléatoire
+            string actionChoisie = actionsDisponibles[lancerDe.Next(actionsDisponibles.Count)];
 
-            // Par défaut, attaquer
-            return "Attaquer";
+            // Exécuter l'action choisie
+            Console.WriteLine($"{NomGuerrier} choisit l'action: {actionChoisie}");
+            return actionChoisie;
         }
 
-        public bool LancerCoupPuissant()
-        {
-            return SortsAssignes.Contains("Coup Puissant") && SortsUtilises[SortsAssignes.IndexOf("Coup Puissant")] > 0;
-        }
+
+
+        //public bool LancerCoupPuissant()
+        //{
+        //    return SortsAssignes.Contains("Coup Puissant") && SortsUtilises[SortsAssignes.IndexOf("Coup Puissant")] > 0;
+        //}
 
         public int ExecuterAction(string action, Guerrier adversaire)
         {
