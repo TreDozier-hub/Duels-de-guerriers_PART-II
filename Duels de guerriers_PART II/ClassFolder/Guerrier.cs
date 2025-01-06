@@ -76,14 +76,19 @@ namespace Duels_de_guerriers_PART_II.ClassFolder
                 string sort = sortsDisponibles[lancerDe.Next(sortsDisponibles.Count)];
                 if (!SortsAssignes.Contains(sort))
                 {
-                    SortsAssignes.Add(sort); // Ajouter le sort à la liste des sorts assignés
-                    SortsUtilises.Add(3); // Initialiser les utilisations restantes à 3
+                    SortsAssignes.Add(sort); // Ajouter le sort a la liste des sorts assignés
+                    SortsUtilises.Add(lancerDe.Next(1, 4)); // Nombre d'utilisations avec nombre aléatoire entre 1 et 3
                 }
             }
 
-            //Pour vérifier les sorts tirés
-            Console.WriteLine($"Sorts attribués à {NomGuerrier} : {string.Join(", ", SortsAssignes)} avec {string.Join(", ", SortsUtilises)} utilisations chacune.");
+            // Afficher les sorts assignés avec leurs utilisations restantes
+            Console.WriteLine($"Sorts attribués à {NomGuerrier} :");
+            for (int i = 0; i < SortsAssignes.Count; i++)
+            {
+                Console.WriteLine($"- {SortsAssignes[i]} : {SortsUtilises[i]} utilisation(s) possible");
+            }
         }
+
 
         // Méthode subir dégats
         public virtual void SubirDegats(int degats)
@@ -186,31 +191,7 @@ namespace Duels_de_guerriers_PART_II.ClassFolder
                     Console.WriteLine("Action invalide, aucun effet.");
                     break;
             }
-        }
-
-        //public string ChoisirActionAutomatique(Guerrier adversaire)
-        //{
-        //    // Utiliser une potion si les PV sont faibles (< 30% du maximum)
-        //    if (SortsAssignes.Contains("Potion") && SortsUtilises[SortsAssignes.IndexOf("Potion")] > 0 && PointsDeVie <= MaxPointsDeVie * 0.3)
-        //    {
-        //        return "Potion";
-        //    }
-
-        //    // Esquiver si l'adversaire a un sort puissant disponible
-        //    if (SortsAssignes.Contains("Esquive") && SortsUtilises[SortsAssignes.IndexOf("Esquive")] > 0 && adversaire.LancerCoupPuissant())
-        //    {
-        //        return "Esquive";
-        //    }
-
-        //    // Utiliser un coup puissant si les PV de l'adversaire sont faibles
-        //    if (SortsAssignes.Contains("Coup Puissant") && SortsUtilises[SortsAssignes.IndexOf("Coup Puissant")] > 0 && adversaire.PointsDeVie <= MaxPointsDeVie * 0.4)
-        //    {
-        //        return "Coup Puissant";
-        //    }
-
-        //    // Par défaut, attaquer
-        //    return "Attaquer";
-        //}
+        }        
 
         public string ChoisirActionAutomatique(Guerrier adversaire)
         {
@@ -236,13 +217,6 @@ namespace Duels_de_guerriers_PART_II.ClassFolder
             Console.WriteLine($"{NomGuerrier} choisit l'action: {actionChoisie}");
             return actionChoisie;
         }
-
-
-
-        //public bool LancerCoupPuissant()
-        //{
-        //    return SortsAssignes.Contains("Coup Puissant") && SortsUtilises[SortsAssignes.IndexOf("Coup Puissant")] > 0;
-        //}
 
         public int ExecuterAction(string action, Guerrier adversaire)
         {

@@ -150,11 +150,35 @@ namespace Duels_de_guerriers_PART_II
                 case 2:
                     Console.Clear();
                     ListeGuerriers();
-                    if (guerriers.Count == 2)
+
+                    // Minimum de gurriers pour continuer
+                    if (guerriers.Count < 2)
                     {
                         AjouterGuerrier();
                     }
-                    TournoiAutomatique();
+
+                    // Vérifie si PV Suffisant
+                    bool DePointsDeVieSuffisant = true;
+                    foreach (var guerrier in guerriers)
+                    {
+                        if (guerrier.PointsDeVie <= 5)
+                        {
+                            RemettrePointsDeVie(guerrier);
+                            DePointsDeVieSuffisant = false;
+                        }
+                    }
+
+                    // Si PV suffisant, lancer tournoi
+                    if (DePointsDeVieSuffisant)
+                    {
+                        TournoiAutomatique();
+                    }
+                    else
+                    {
+                        Console.WriteLine("Les points de vie sont affecté.");
+                        // Relancer le tournoi remise de points de vie
+                        TournoiAutomatique();
+                    }
                     break;
 
                 case 3:
@@ -232,42 +256,55 @@ namespace Duels_de_guerriers_PART_II
         // Méthode pour afficher les barres de progression côte à côte
         public static void AfficherBarresDeProgression(Guerrier guerrier1, Guerrier guerrier2)
         {
-            //Console.SetCursorPosition(0, 0); // Place le curseur en haut de la console
-            Console.Write(new string(' ', Console.WindowWidth)); // Nettoie la ligne
-            Console.SetCursorPosition(0, 0); // Remet le curseur en position de départ
+            Console.SetCursorPosition(0, 0); // Place le curseur en haut de la console
+
+            // Nettoie la zone des barres de vie (4 lignes réservées)
+            for (int i = 0; i < 4; i++)
+            {
+                Console.WriteLine(new string(' ', Console.WindowWidth));
+            }
+
+            // Remet le curseur en haut pour dessiner les barres
+            Console.SetCursorPosition(0, 0);
 
             // Affichage des barres de progression côte à côte
-            Console.Write($"{guerrier1.NomGuerrier} : ");
-            DessinerBarre(guerrier1.PointsDeVie, 100);
-            Console.Write("  VS  "); // Espacement entre les deux barres
-            Console.Write($"{guerrier2.NomGuerrier} : ");
-            DessinerBarre(guerrier2.PointsDeVie, 100);
+            Console.WriteLine($"{guerrier1.NomGuerrier} : ");
+            DessinerBarre(guerrier1.PointsDeVie, guerrier1.MaxPointsDeVie);
+            Console.WriteLine($"{guerrier2.NomGuerrier} : ");
+            DessinerBarre(guerrier2.PointsDeVie, guerrier2.MaxPointsDeVie);
 
             // Ligne de séparation
-            //Console.SetCursorPosition(0, 2);
-            //Console.Write(new string('-', Console.WindowWidth));
+            Console.WriteLine(new string('-', Console.WindowWidth));
         }
 
-        // Méthode pour dessiner une seule barre de progression
+        // Méthode pour dessiner une seule barre de progression         
         private static void DessinerBarre(int pointsDeVieActuels, int pointsDeVieMax)
         {
-            int largeurMaxBarre = 30; // Nombre de caractères pour la barre
+            const int largeurMaxBarre = 60; // Nombre de caractères pour la barre
+            const int pointsDeVieMaxLimite = 100; // Limite maximum PvMax
+
+            // Faire que les points de vie dépassent pas la limite
+            pointsDeVieMax = Math.Min(pointsDeVieMax, pointsDeVieMaxLimite);
+
+            // Verifi limite pvMax
+            pointsDeVieActuels = Math.Max(0, Math.Min(pointsDeVieActuels, pointsDeVieMax));
+
             double ratio = (double)pointsDeVieActuels / pointsDeVieMax;
             int largeurBarre = (int)(ratio * largeurMaxBarre);
 
-            //Console.Write("[");
-            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.Write(new string('/', largeurBarre)); // Partie pleine
             Console.ResetColor();
-            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.Write(new string('-', largeurMaxBarre - largeurBarre)); // Partie vide
             Console.ResetColor();
-            Console.Write($"{pointsDeVieActuels}/{pointsDeVieMax} PV\n");
-
+            Console.ForegroundColor = ConsoleColor.DarkBlue;
+            Console.Write($"| {pointsDeVieActuels}/{pointsDeVieMax} PV\n");
+            Console.ResetColor();
         }
 
-        // Methode pour afficher la liste des sort (bonus ou pas)
-        static void AfficherSorts()
+            // Methode pour afficher la liste des sort (bonus ou pas)
+            static void AfficherSorts()
         {
             Console.Clear();
             CentreAccueuil("---------------------------\n",
@@ -296,7 +333,7 @@ namespace Duels_de_guerriers_PART_II
             // Boucle For engristrer les new Guerriers
             for (int i = 0; i < nbGuerriers; i++)
             {
-                string nom = VerifierSaisi<string>("Entrez le nom du guerrier : ", ConsoleColor.Yellow, ConsoleColor.DarkMagenta);
+                string nom = VerifierSaisi<string>("\nEntrez le nom du guerrier : ", ConsoleColor.Yellow, ConsoleColor.DarkMagenta);
                 int pointsDeVie = VerifierSaisi<int>("Entrez les points de vie du guerrier: ", ConsoleColor.Black, ConsoleColor.White);
                 int nbDesAttaque = VerifierSaisi<int>("Entrez le nombre de dés d'attaque du guerrier : ", ConsoleColor.Black, ConsoleColor.White);
                 
@@ -314,7 +351,7 @@ namespace Duels_de_guerriers_PART_II
                         break;
                     case 2:
                         Console.Write("Le nain porte-t-il une armure ? (o/n) :");
-                        Console.WriteLine($"Tu perdra 5 points de vie. Mais il taidera \n");
+                        Console.Write($"\nTu perdra 5 points de vie. Mais il taidera \n");
                         string choixArmure = Console.ReadLine()?.ToLower();
                         if (choixArmure == "o")
                         {
@@ -367,14 +404,20 @@ namespace Duels_de_guerriers_PART_II
         static void ListeGuerriersAccueuil()
         {
             Console.Clear();
-            Console.BackgroundColor = ConsoleColor.Yellow;
-            Console.ForegroundColor = ConsoleColor.Black;
-            ListeGuerriers();
-            Console.ResetColor();
+            Console.WriteLine("\nListe des guerriers créés :\n");
+            for (int i = 0; i < guerriers.Count; i++)
+            {
+                Console.BackgroundColor = ConsoleColor.Yellow;
+                Console.ForegroundColor = ConsoleColor.Black;                
+                Console.WriteLine($"{i + 1}. {guerriers[i].NomGuerrier} est un {guerriers[i].TypeGuerrier} -> PV: {guerriers[i].PointsDeVie} / NA: {guerriers[i].NbAttaque} / Sorts attribués : {string.Join(", ", guerriers[i].SortsAssignes)}");
+                Console.ResetColor();
+                //AjouterGuerrier();
+                //Console.ResetColor();
+            }            
             Console.WriteLine("");
             AjouterGuerrier();
             SupprimerGuerrier();
-            Console.ResetColor();
+            
             RetourMenu();
         }
 
@@ -449,11 +492,11 @@ namespace Duels_de_guerriers_PART_II
 
             //RetourMenu();
 
-            Console.Clear();
-            Console.WriteLine($"\nDébut du duel : {guerrier1.NomGuerrier} contre {guerrier2.NomGuerrier} !\n");
+            Console.Clear();           
 
             // Barres de progression initiales
             AfficherBarresDeProgression(guerrier1, guerrier2);
+            Console.WriteLine($"\nDébut du duel : {guerrier1.NomGuerrier} contre {guerrier2.NomGuerrier} !\n");
 
             while (guerrier1.PointsDeVie > 0 && guerrier2.PointsDeVie > 0)
             {
@@ -466,6 +509,7 @@ namespace Duels_de_guerriers_PART_II
 
                 if (guerrier2.PointsDeVie <= 0)
                 {
+                    Console.SetCursorPosition(0, 10);
                     Console.WriteLine($"{guerrier1.NomGuerrier} remporte le duel !");
                     SauvegarderGagnant(guerrier1, guerrier2);
                     break;
@@ -498,22 +542,32 @@ namespace Duels_de_guerriers_PART_II
         static void DuelCoupParCoup(Guerrier guerrier1, Guerrier guerrier2)
         {
             Console.Clear();
-            Console.WriteLine($"Duel CoupParCoup : {guerrier1.NomGuerrier} VS {guerrier2.NomGuerrier}");
+            AfficherBarresDeProgression(guerrier1, guerrier2);
+            // curseur sous la barre de vie
+            Console.SetCursorPosition(0, 5); 
+
+            Console.WriteLine($"Duel Coup Par Coup : {guerrier1.NomGuerrier} VS {guerrier2.NomGuerrier}\n");
+
             while (guerrier1.PointsDeVie > 0 && guerrier2.PointsDeVie > 0)
             {
-                Console.WriteLine($"{guerrier1.NomGuerrier} tu : 1. Attaque | 2. Esquive | 3. Potion");
+                Console.WriteLine($"{guerrier1.NomGuerrier}, à toi de jouer : 1. Attaque | 2. Esquive | 3. Potion");
                 int action1 = ObtenirEntierValide("Action : ");
                 guerrier1.ExecuterAction(action1, guerrier2);
+                AfficherBarresDeProgression(guerrier1, guerrier2);
+                // Remet le curseur sous les actions
+                Console.SetCursorPosition(0, 7); 
 
                 if (guerrier2.PointsDeVie <= 0) break;
 
-                Console.WriteLine($"{guerrier2.NomGuerrier} tu : 1. Attaque | 2. Esquive | 3. Potion");
+                Console.WriteLine($"{guerrier2.NomGuerrier}, à toi de jouer : 1. Attaque | 2. Esquive | 3. Potion");
                 int action2 = ObtenirEntierValide("Action : ");
                 guerrier2.ExecuterAction(action2, guerrier1);
+                AfficherBarresDeProgression(guerrier1, guerrier2);
+                Console.SetCursorPosition(0, 7);
             }
+
             Console.WriteLine(guerrier1.PointsDeVie > 0 ? $"{guerrier1.NomGuerrier} gagne !" : $"{guerrier2.NomGuerrier} gagne !");
             SauvegarderGagnant(guerrier2, guerrier1);
-
         }
 
         // Methode pour lancer une baston générale
@@ -627,12 +681,13 @@ namespace Duels_de_guerriers_PART_II
                     Console.Clear();
                     AjouterGuerrier();
                     ListeGuerriers();
+                    TournoiAutomatique();
                 }
                 else if (ajoutListe == "n")
                 {
                     MenuPrincipal();
                 }
-                RetourMenu();
+                //RetourMenu();
                 return;
             }
 
