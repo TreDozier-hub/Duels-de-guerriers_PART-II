@@ -749,7 +749,6 @@ namespace Duels_de_guerriers_PART_II
             MenuPrincipal();
         }
 
-        //private static List<Guerrier> perdant = new List<Guerrier>();
         List<Guerrier> perdant = new List<Guerrier>();
 
         // Méthode pour ajouter un perdant à la liste

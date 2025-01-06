@@ -42,7 +42,7 @@ namespace Duels_de_guerriers_PART_II.ClassFolder
             NomGuerrier = nom;
             PointsDeVie = pointsDeVie;
             NbAttaque = nbDesAttaque;
-            //TirerSorts(); // Attribuer des sorts aléatoires à la création
+            TirerSorts(); // Attribuer des sorts aléatoires
             MaxPointsDeVie = pointsDeVie; // Initialisation des PV max
             TypeGuerrier = "Guerrier";
         }
@@ -99,7 +99,7 @@ namespace Duels_de_guerriers_PART_II.ClassFolder
             if (index != -1 && SortsUtilises[index] > 0)
             {
                 Console.WriteLine($"{NomGuerrier} tente d'esquiver !");
-                if (lancerDe.Next(0, 2) == 0) // 50% probability to dodge
+                if (lancerDe.Next(0, 2) == 0) // 1 fois sur 2
                 {
                     Console.WriteLine("Esquive réussie ! Les dégâts seront réduits de moitié.");
                 }
