@@ -115,7 +115,7 @@ namespace Duels_de_guerriers_PART_II.ClassFolder
             }
         }
 
-        // HMethode potion magique (restore 5 PV)
+        // Methode potion magique (restore 5 PV)
         // avec 25% de chance que ça fonctionne (lancerDe.Next(0, 4))
         public void UtiliserPotion()
         {
@@ -140,7 +140,7 @@ namespace Duels_de_guerriers_PART_II.ClassFolder
             }
         }
 
-        // Methode pour coup puissant
+        // Methode coup puissant (coup de hâche)
         public void CoupPuissant()
         {
             int index = SortsAssignes.IndexOf("Coup Puissant");
@@ -178,6 +178,9 @@ namespace Duels_de_guerriers_PART_II.ClassFolder
                     break;
                 case 3:
                     UtiliserPotion();
+                    break;
+                case 4:
+                    CoupPuissant();
                     break;
                 default:
                     Console.WriteLine("Action invalide, aucun effet.");
