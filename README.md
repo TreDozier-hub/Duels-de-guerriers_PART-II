@@ -15,10 +15,11 @@
 1. Créer des guerriers depuis un menu.
 2. Afficher la liste des guerriers.
 3. Lancer un tournoi entre les guerriers.
+4. Lancer duel entre 2 guerries.
+5. Afficher liste de gagnants et de perdants
 
 ---
 
-### **Fichier : Program.cs**
 
 #### **Affichage dess différents menu et autres méthodes**
 - Méthode : `MenuPrincipal()`
