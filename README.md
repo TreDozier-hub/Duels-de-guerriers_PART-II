@@ -20,32 +20,41 @@
 
 ### **Fichier : Program.cs**
 
-#### **Étape 1 : Afficher le Menu Principal**
-- Méthode : `AfficherMenuPrincipal()`
-- Objectif : Afficher un menu avec des options et exécuter l’action correspondante.
-
----
-
-#### **Étape 2 : Ajouter un Guerrier**
+#### **Affichage dess différents menu et autres méthodes**
+- Méthode : `MenuPrincipal()`
+  . Objectif : Afficher un menu avec des options et exécuter l’action correspondante.
+- Méthode : `TypeCombats()`
+  . Objectif : Afficher un menu avec le choix entre "Duel" ou "Tournoi".
+  --> Duel : Possibilite de choisir un nbr de guerriers à créer et sélection des 2 guerriers pour un duel
+  --> Tournoi : Si liste guerriers vide possibilité de creer ds guerriers pout le tournoi
 - Méthode : `AjouterGuerrier()`
-- Objectif : Permettre la création de guerriers personnalisés.
+  . Objectif : Création de guerriers avec choix de "Type de guerrier"
+  --> Guerriers : La Class Guerriers avec les différentes methodes :
+    _⦁	Attaquer()
+    ⦁	 TirerSorts() --> Tirer un nombre aléatoire de sorts entre 1 et 3 par guerriers
+    ⦁	Esquiver() --> Boll 1 fois sur 2
+    ⦁	UtiliserPotion() --> avec 25% de chance que ça fonctionne. Restore 5 PV
+    ⦁	CoupPuissant --> "Coup de hâche", 10 PV de moins - 25% de chance que ça fonctionne 
+	     Il y  d'autres sorts (coups) en prépartion qui sont indiqués dans ma liste, mais pas encore mis en Methodes._
+      ```List<string> sortsDisponibles = new List<string> { "Esquive", "Potion", "Coup Puissant", "Bouclier Magique", "Regain d'Énergie" };```
+    _⦁	ChoisirActionAutomatique() --> pour pouvoir utiliser les sorts (coups) aléatoirement pour les tournois ou duels automatique_
 
----
+  --> Nain : Qui hirite de la Class Guerriers avec quelques subtilité : Le port d'une armure (type bool) avec perte de points de vie si le Nain est    choisie
+  --> Elfe : Qui hirite de la Class Guerriers. Celui-ci subit plus de dégats
+  -- Nazgûle : Qui hirite de la Class Guerriers. Perte de point dès la création du guerrier en contre partie ces coup sont plus violent
 
-#### **Étape 3 : Afficher la Liste des Guerriers**
-- Méthode : `AfficherListeGuerriers()`
-- Objectif : Afficher les informations de tous les guerriers créés.
+- Méthode DuelCoupParCoup()
+   . Permet des duels au coup par coup avec choix des sorts/coups
+- Méthode LancerTournoi()
+   . Permet des tournoi en automatique
+- Méthode DuelAutomatique()
+   . Permet des duel en automatique
+_Il est important de signaler que à la séléction dde Duel dans "TypeCombats()"; après sélections des guerriers combattants il est demandé aux l'utilisateurs s'ils souhaite effecter e duel en automatique ou en coup pour coup via un 3 ème menu._
 
----
-
-#### **Étape 4 : Lancer un Tournoi**
-- Méthode : `LancerTournoi()`
-- Objectif : Faire combattre les guerriers jusqu’à ce qu’il en reste un.
-
----
-
-### **Nouvel Attribut : Liste Globale**
-- Ajouter cette liste globale pour stocker les guerriers créés :
+#### **Ensemble de listes**
+- Ajout d'une liste globale pour stocker les guerriers créés
+- Ajout d'une liste de gagnants avec la methode SauvegarderGagnant() ( au choix o/n)
+- Ajout d'une liste de perdants avec la methode AjouterPerdant() pour y stocker les perdants avec possibilité d'affacer la liste et du coup  les réafecter dans la liste de guerriers principale
 
 ## **STRUCTURE FINALE DES FICHIERS**
 - `Guerrier.cs` : Définit la classe de base `Guerrier`.
